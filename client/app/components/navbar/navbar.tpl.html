@@ -1,0 +1,26 @@
+<md-toolbar class="md-hue-2" flex>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Menu" ng-click="ctrl.MenuBackAction()">
+      <md-icon hide-gt-sm ng-hide="ctrl.backBtn.show"><i class="material-icons">menu</i></md-icon>
+      <md-icon ng-show="ctrl.backBtn.show"><i class="material-icons">arrow_back</i></md-icon>
+    </md-button>
+
+    <h2 flex>Vlc Stream</h2>
+
+    <md-button ng-repeat="item in ctrl.menu" ui-sref-active="active" hide-xs hide-sm ui-sref="{{item.state}}">
+      {{item.title}}
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-sidenav flex layout="column" class="md-sidenav-left md-whiteframe-4" md-component-id="left" hide-gt-sm>
+
+  <md-content layout-padding="">
+    <md-list ng-cloak>
+      <md-list-item ng-repeat="item in ctrl.menu" ui-sref-active="active">
+        <a ui-sref="{{item.state}}"> {{ item.title }} </a>
+      </md-list-item>
+    </md-list>
+  </md-content>
+
+</md-sidenav>

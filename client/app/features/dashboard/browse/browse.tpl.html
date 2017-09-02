@@ -1,0 +1,28 @@
+<md-content flex layout="column">
+  <md-list ng-cloak flex ng-hide="browse.loading">
+    <md-list-item ng-repeat="file in browse.files" ng-click="$event.stopPropagation();browse.onBrowseTo(file)">
+      <md-icon>
+        <i class="material-icons">{{ file.isFile ? 'note': 'folder' }}</i>
+      </md-icon>
+      <p> {{ file.filename }} </p>
+      <md-menu>
+        <md-button aria-label="interactions menu" class="md-icon-button" ng-click="browse.openMenu($mdMenu, $event)">
+          <md-icon><i class="fa fa-ellipsis-v"></i></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="browse.onStream(file)">
+              <md-icon md-menu-align-target>
+                <i class="material-icons">cast</i>
+              </md-icon>
+              stream
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </md-list-item>
+  </md-list>
+  <div flex layout="row" ng-show="browse.loading" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</md-content>

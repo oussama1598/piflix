@@ -1,0 +1,42 @@
+$fa-font-path: '/assets/fonts/font-awesome/';
+@import '~font-awesome/scss/font-awesome';
+@import '~angular-material/angular-material';
+// @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+md-toolbar.md-table-toolbar form {
+  margin-left: 16px;
+  &>input {
+    outline: none;
+    width: 100%;
+    margin: 0;
+    border: none;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+md-input-container{
+  margin: 0;
+}
+
+
+// Component styles are injected through gulp
+
+/* inject:scss */
+
+
+@import 'components/navbar/navbar';
+
+
+@import 'features/dashboard/browse/browse';
+
+
+@import 'features/dashboard/dashboard';
+
+
+/* endinject */
