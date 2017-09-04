@@ -15,9 +15,15 @@ export class Streamer {
 
     if (this.supportedInputes.indexOf(input) < 0) return Promise.reject(new Error('input is required'))
 
+    const entries = [...this.files.values()]
+    const entryExist = entries.filter(entry => entry.uri === uri)[0]
+
+    if (entryExist) return Promise.resolve(entryExist.id)
+
     this.files.set(id, {
       uri,
-      input: input
+      input: input,
+      id
     })
 
     return Promise.resolve(id)
