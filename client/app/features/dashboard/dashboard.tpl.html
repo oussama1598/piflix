@@ -1,2 +1,25 @@
 <navbar></navbar>
 <ui-view layout="column" flex layout-fill></ui-view>
+<player></player>
+<md-fab-speed-dial md-open="false" md-direction="up" class="md-fling float-btn">
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-fab md-warn">
+      <md-icon>
+        <i class="material-icons">cast</i>
+      </md-icon>
+    </md-button>
+  </md-fab-trigger>
+
+  <md-fab-actions>
+    <md-button aria-label="StreamURl" class="md-fab md-raised md-mini">
+      <md-icon>
+        <i class="material-icons">attachment</i>
+      </md-icon>
+    </md-button>
+    <md-button aria-label="Youtube" class="md-fab md-raised md-mini" ng-click="dashboard.onOpenYoutubeDialog($event)">
+      <md-icon>
+        <i class="material-icons fa fa-youtube-play"></i>
+      </md-icon>
+    </md-button>
+  </md-fab-actions>
+</md-fab-speed-dial>

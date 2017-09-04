@@ -19,9 +19,9 @@ export default class BrowseService {
     }).then(res => res.data)
   }
 
-  stream (path) {
-    return this.$http.post('/api/stream', {
-      path
-    }).then(res => res.data)
+  getPreviousPath () {
+    if (localStorage.path) return localStorage.path
+
+    return null
   }
 }

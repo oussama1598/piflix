@@ -3,9 +3,9 @@ import uirouter from 'angular-ui-router'
 
 // Import base modules
 import routes from './dashboard.routes'
-
-// Import internal modules
+import controller from './dashboard.controller'
 
 export default angular.module('vlcStream.dashboard', [uirouter])
   .config(routes)
+  .controller(controller.UID, controller)
   .name

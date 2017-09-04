@@ -1,0 +1,39 @@
+<md-dialog>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Youtube Streaming</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="youtube.cancel()">
+        <md-icon>
+          <i class="material-icons">close</i>
+        </md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content">
+      <form name="urlForm" novalidate ng-submit="youtube.onFormSubmited()">
+        <div layout="row">
+          <md-input-container class="md-block">
+            <label>Youtube Url</label>
+            <input required name="url" ng-model="youtube.url">
+          </md-input-container>
+          <md-button class="md-block" type="submit" ng-disabled="urlForm.$invalid || youtube.loading" layout="row" layout-align="center center">
+            <span ng-show="!youtube.loading">Load</span>
+            <md-progress-circular class="md-hue-2" md-diameter="20px" ng-show="youtube.loading"></md-progress-circular>
+          </md-button>
+        </div>
+      </form>
+
+      <md-list ng-cloak>
+        <md-list-item ng-repeat="format in youtube.formats">
+          <p>{{ format.filetype }} - {{ format.resolution }} {{ format.bitrate ? '- ' + format.bitrate + 'kpbs' : '' }}</p>
+          <md-icon class="md-secondary" ng-click="youtube.onCast(format.url)">
+            <i class="material-icons">cast</i>
+          </md-icon>
+        </md-list-item>
+      </md-list>
+    </div>
+  </md-dialog-content>
+</md-dialog>

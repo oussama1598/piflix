@@ -1,0 +1,19 @@
+md-slider-container > *:first-child:not(md-slider),
+md-slider-container > *:last-child:not(md-slider) {
+  max-width: auto !important;
+  min-width: auto !important;
+}
+
+.slider {
+  span {
+    font-size: 0.8em;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
+}

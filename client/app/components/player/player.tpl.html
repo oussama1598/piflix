@@ -1,0 +1,41 @@
+<md-toolbar class="md-hue-2" flex layout="column" >
+  <div class="md-toolbar-tools" flex layout="row">
+    <div flex="none">
+      <md-button ng-disabled="!player.status.running" class="md-icon-button" aria-label="PlayPause" ng-click="player.onPlayPause()">
+        <md-icon ng-show="player.status.paused">
+          <i class="material-icons">play_arrow</i>
+        </md-icon>
+        <md-icon ng-show="!player.status.paused">
+          <i class="material-icons">pause</i>
+        </md-icon>
+      </md-button>
+      <md-button ng-disabled="!player.status.running" class="md-icon-button" aria-label="Stop" ng-click="player.onStop()">
+        <md-icon><i class="material-icons">stop</i></md-icon>
+      </md-button>
+    </div>
+
+    <div class="slider" flex="70" layout="row" layout-align="center center">
+      <span flex="none">{{ player.humanize(player.status.position) }}</span>
+      <md-slider ng-disabled="!player.status.running" flex min="0" max="{{player.status.duration}}" step="1" ng-model="player.status.position" ng-change="player.isChanging = true;player.dOnPositionChange(player.status.position)">
+      </md-slider>
+      <span flex="none">{{ player.humanize(player.status.duration) }}</span>
+    </div>
+    <div class="slider" flex="none" style="margin-left: 15px;">
+      <md-slider ng-disabled="!player.status.running" flex min="0" max="1" step="0.1" ng-model="player.status.volume" ng-change="player.isChanging = true;player.dOnVolumeChange(player.status.volume)">
+      </md-slider>
+    </div>
+    <div flex="none">
+      <md-button ng-disabled="!player.status.running" class="md-icon-button" aria-label="Mute" ng-click="player.muteToggle()">
+        <md-icon ng-show="!player.status.muted">
+          <i class="material-icons">volume_off</i>
+        </md-icon>
+        <md-icon ng-show="player.status.muted">
+          <i class="material-icons">volume_up</i>
+        </md-icon>
+      </md-button>
+      <md-button ng-disabled="!player.status.running" class="md-icon-button" aria-label="Stop" ng-click="player.Stop()">
+        <md-icon><i class="material-icons">stop</i></md-icon>
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>

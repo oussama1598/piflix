@@ -1,27 +1,65 @@
 import send from 'send'
+import ip from 'ip'
+import { checkIfStreamable } from './Streamable'
+import request from 'request'
 
 export class Streamer {
   constructor () {
     this.files = new Map()
+    this.supportedInputes = ['local', 'internet']
   }
 
-  add (path) {
+  add (uri, _input) {
     const id = Math.random().toString(36).substring(3)
+    const input = _input.toLowerCase()
 
-    this.files.set(id, path)
-    // Vlc.stream(id)
+    if (this.supportedInputes.indexOf(input) < 0) return Promise.reject(new Error('input is required'))
+
+    this.files.set(id, {
+      uri,
+      input: input
+    })
 
     return Promise.resolve(id)
   }
 
   getFile (req, res, next) {
     const id = req.params.id
-    const path = this.files.get(id)
+    const details = this.files.get(id)
 
-    if (!path) return res.sendStatus(404)
-    // check if its streamable
+    if (!details) return res.sendStatus(404)
 
+    const uri = details.uri
+    const input = details.input
+    switch (input) {
+      case 'local':
+        return this._localStreaming(uri, req, res)
+      case 'internet':
+        return this._internetStreaming(uri, req, res)
+    }
+  }
+
+  getLocalIp () {
+    return ip.address()
+  }
+
+  isStreamable (filepath) {
+    return checkIfStreamable(filepath)
+  }
+
+  _localStreaming (path, req, res) {
     send(req, path).pipe(res)
+  }
+
+  _internetStreaming (uri, req, res) {
+    const range = req.headers.range
+
+    request({
+      url: uri,
+      headers: {
+        range
+      }
+    }).pipe(res)
   }
 }
 

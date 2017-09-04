@@ -5,6 +5,7 @@ import {
 import os from 'os'
 import path from 'path'
 import _ from 'underscore'
+import { checkIfStreamable } from './Streamable'
 
 const fs = promisifyAll(filesystem)
 
@@ -24,13 +25,17 @@ export class FileBrowser {
         files.map(file => {
           const filepath = path.join(uri, file)
 
-          return fs.statAsync(filepath)
-            .then(data => ({
-              isFile: data.isFile(),
-              size: data.size,
-              path: filepath,
-              filename: file
-            }))
+          return Promise.all([
+            fs.statAsync(filepath)
+              .then(data => ({
+                isFile: data.isFile(),
+                size: data.size,
+                path: filepath,
+                filename: file
+              })),
+            checkIfStreamable(filepath).then(streamable => ({ streamable }))
+          ])
+            .then(results => results.reduce((a, b) => Object.assign(a, b)))
         })
       ))
       .then(files => {

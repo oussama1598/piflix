@@ -24,6 +24,12 @@ md-input-container{
   margin: 0;
 }
 
+.float-btn {
+  position: absolute;
+  bottom: 70px;
+  right: 10px;
+}
+
 
 // Component styles are injected through gulp
 
@@ -31,6 +37,9 @@ md-input-container{
 
 
 @import 'components/navbar/navbar';
+
+
+@import 'components/player/player';
 
 
 @import 'features/dashboard/browse/browse';

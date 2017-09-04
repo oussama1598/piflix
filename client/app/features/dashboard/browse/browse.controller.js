@@ -4,14 +4,18 @@ export default class browseController {
   }
 
   /* @ngInject */
-  constructor (BrowseService) {
+  constructor (BrowseService, $rootScope, StreamService) {
+    this.$rootScope = $rootScope
     this.BrowseService = BrowseService
+    this.StreamService = StreamService
     this.files = []
     this.loading = true
   }
 
   $onInit () {
-    this.getStructure()
+    this.getStructure(
+      this.BrowseService.getPreviousPath()
+    )
   }
 
   onBrowseTo (file) {
@@ -23,7 +27,7 @@ export default class browseController {
   onStream (file) {
     if (!file.isFile) return
 
-    this.BrowseService.stream(file.path)
+    this.StreamService.streamAndPlay(file.path, 'local')
   }
 
   getStructure (path) {
@@ -31,12 +35,9 @@ export default class browseController {
     this.BrowseService.getDirStructure(path)
       .then(files => {
         this.files = files.files
+        localStorage.path = files.path
 
         this.loading = false
       })
-  }
-
-  openMenu ($mdMenu, ev) {
-    $mdMenu.open(ev)
   }
 }

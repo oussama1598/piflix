@@ -5,21 +5,11 @@
         <i class="material-icons">{{ file.isFile ? 'note': 'folder' }}</i>
       </md-icon>
       <p> {{ file.filename }} </p>
-      <md-menu>
-        <md-button aria-label="interactions menu" class="md-icon-button" ng-click="browse.openMenu($mdMenu, $event)">
-          <md-icon><i class="fa fa-ellipsis-v"></i></md-icon>
-        </md-button>
-        <md-menu-content width="4">
-          <md-menu-item>
-            <md-button ng-click="browse.onStream(file)">
-              <md-icon md-menu-align-target>
-                <i class="material-icons">cast</i>
-              </md-icon>
-              stream
-            </md-button>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
+      <md-button class="md-icon-button" ng-click="browse.onStream(file)" ng-show="file.streamable">
+        <md-icon md-menu-align-target>
+          <i class="material-icons">cast</i>
+        </md-icon>
+      </md-button>
     </md-list-item>
   </md-list>
   <div flex layout="row" ng-show="browse.loading" layout-align="center center">
