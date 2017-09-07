@@ -13,6 +13,7 @@ import run from './app.run'
 // Import internal modules
 import dashboardModule from './features/dashboard'
 import browseModule from './features/dashboard/browse'
+import dlnaModule from './features/dashboard/dlna'
 
 // Import internal components
 import navbarComponent from './components/navbar'
@@ -21,19 +22,18 @@ import playerComponent from './components/player'
 import SocketService from './shared/socket.service'
 import NotificationService from './shared/notification.service'
 import YoutubeService from './shared/youtube.service'
-import StreamService from './shared/stream.service'
 
-export default angular.module('vlcStream', [
+export default angular.module('PiFlix', [
   uiRouter,
   ngMaterial,
   dashboardModule,
   navbarComponent,
   browseModule,
+  dlnaModule,
   playerComponent,
   SocketService,
   NotificationService,
   YoutubeService,
-  StreamService,
   'rt.debounce'
 ])
   .config(routes)
@@ -42,7 +42,7 @@ export default angular.module('vlcStream', [
 
 angular.element(document)
   .ready(() => {
-    angular.bootstrap(document, ['vlcStream'], {
+    angular.bootstrap(document, ['PiFlix'], {
       strictDi: true
     })
   })

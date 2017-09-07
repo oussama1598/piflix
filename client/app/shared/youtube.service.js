@@ -17,6 +17,6 @@ export class YoutubeService {
   }
 }
 
-export default angular.module('gamePassApp.YoutubeService', [])
+export default angular.module('PiFlix.YoutubeService', [])
   .service('YoutubeService', YoutubeService)
   .name

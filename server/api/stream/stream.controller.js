@@ -1,5 +1,4 @@
 import Streamer from '../../modules/Streamer'
-import { port } from '../../config/environment'
 
 export const stream = (req, res, next) => {
   req.checkBody('streamURI', 'streamURI is required')
@@ -17,7 +16,7 @@ export const stream = (req, res, next) => {
 
       return Streamer.add(req.body.streamURI, req.body.input)
         .then(id => res.status(200).json({
-          streamUrl: `http://${Streamer.getLocalIp()}:${port}/api/stream/${id}`
+          id
         }))
         .catch(err => res.status(400).json({
           errors: [ err.message ]

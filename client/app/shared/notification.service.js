@@ -16,6 +16,6 @@ export class NotificationService {
   }
 }
 
-export default angular.module('gamePassApp.NotificationService', [])
+export default angular.module('PiFlix.NotificationService', [])
   .service('NotificationService', NotificationService)
   .name

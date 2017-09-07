@@ -1,11 +1,11 @@
 <md-content flex layout="column">
   <md-list ng-cloak flex ng-hide="browse.loading">
-    <md-list-item ng-repeat="file in browse.files" ng-click="$event.stopPropagation();browse.onBrowseTo(file)">
+    <md-list-item ng-repeat="file in browse.result.items" ng-click="$event.stopPropagation();browse.onBrowseTo(file)">
       <md-icon>
         <i class="material-icons">{{ file.isFile ? 'note': 'folder' }}</i>
       </md-icon>
-      <p> {{ file.filename }} </p>
-      <md-button class="md-icon-button" ng-click="browse.onStream(file)" ng-show="file.streamable">
+      <p> {{ file.title }} </p>
+      <md-button class="md-icon-button" ng-click="browse.onStream(file)" ng-show="file.isFile">
         <md-icon md-menu-align-target>
           <i class="material-icons">cast</i>
         </md-icon>

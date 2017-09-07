@@ -1,0 +1,11 @@
+<md-content flex layout="column">
+  <md-list ng-cloak flex ng-hide="dlna.loading">
+    <md-list-item ng-repeat="device in dlna.listDevices()" ng-click="dlna.onBrowseDlna(device.uuid)">
+      <img ng-src="{{ device.iconUrl }}" class="md-avatar" alt="{{ device.name }}" />
+      <p> {{ device.name }} </p>
+    </md-list-item>
+  </md-list>
+  <div flex layout="row" ng-show="dlna.loading" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+</md-content>

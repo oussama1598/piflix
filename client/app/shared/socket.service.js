@@ -3,10 +3,10 @@ import socketIo from 'socket.io-client'
 
 export class SocketService {
   constructor () {
-    this.io = socketIo('http://raspberrypi.local:8082')
+    this.io = socketIo()
   }
 }
 
-export default angular.module('gamePassApp.SocketService', [])
+export default angular.module('PiFlix.SocketService', [])
   .service('SocketService', SocketService)
   .name

@@ -4,22 +4,35 @@ export default class browseController {
   }
 
   /* @ngInject */
-  constructor (BrowseService, $rootScope, StreamService) {
+  constructor (BrowseService, $rootScope, $stateParams) {
     this.$rootScope = $rootScope
     this.BrowseService = BrowseService
-    this.StreamService = StreamService
-    this.files = []
+    this.$stateParams = $stateParams
+
+    this.history = []
+    this.result = {
+      items: []
+    }
     this.loading = true
   }
 
   $onInit () {
-    this.getStructure(
-      this.BrowseService.getPreviousPath()
-    )
+    this.$rootScope.$broadcast('backBtn', {
+      show: true,
+      state: 'dashboard.dlna'
+    })
+
+    this.getStructure(0, 20, 1)
   }
 
   onBrowseTo (file) {
     if (file.isFile) return
+
+    if (file.title !== '..') this.history.push(this.result.path)
+    if (file.title === '..') {
+      this.getStructure(this.history[ this.history.length - 1 ])
+      return this.history.pop()
+    }
 
     this.getStructure(file.path)
   }
@@ -27,16 +40,26 @@ export default class browseController {
   onStream (file) {
     if (!file.isFile) return
 
-    this.StreamService.streamAndPlay(file.path, 'local')
+    this.$rootScope.$broadcast('play', file.streamUrl)
   }
 
-  getStructure (path) {
+  getStructure (path, limit, page) {
     this.loading = true
-    this.BrowseService.getDirStructure(path)
-      .then(files => {
-        this.files = files.files
-        localStorage.path = files.path
+    this.BrowseService.getDirStructure(
+      this.$stateParams.uuid,
+      path,
+      limit,
+      page
+    )
+      .then(data => {
+        if (parseInt(data.path) !== 0) {
+          data.items.unshift({
+            title: '..',
+            isFile: false
+          })
+        }
 
+        this.result = data
         this.loading = false
       })
   }

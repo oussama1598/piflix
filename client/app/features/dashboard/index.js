@@ -5,7 +5,7 @@ import uirouter from 'angular-ui-router'
 import routes from './dashboard.routes'
 import controller from './dashboard.controller'
 
-export default angular.module('vlcStream.dashboard', [uirouter])
+export default angular.module('PiFlix.dashboard', [uirouter])
   .config(routes)
   .controller(controller.UID, controller)
   .name

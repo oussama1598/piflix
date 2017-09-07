@@ -5,58 +5,58 @@ export default class PlayerService {
   }
 
   /* @ngInject */
-  constructor ($http) {
+  constructor ($http, NotificationService) {
     this.$http = $http
-    this.serverURI = 'http://raspberrypi.local:8082'
+    this.NotificationService = NotificationService
   }
 
   getStatus () {
-    return this.$http.get(`${this.serverURI}/controls/status`)
+    return this.$http.get('status')
       .then(res => res.data)
   }
 
   setVolume (value) {
     return this._request(
-      `${this.serverURI}/controls/volume`, { value }
+      'volume', { value }
     ).then(res => res.data)
   }
 
   setPosition (to) {
     return this._request(
-      `${this.serverURI}/controls/seek`, { to }
+      'seek', { to }
     ).then(res => res.data)
   }
 
   playPause () {
-    return this._request(
-      `${this.serverURI}/controls/playpause`
-    ).then(res => res.data)
+    return this._request('playpause')
+      .then(res => res.data)
   }
 
   stop () {
-    return this._request(
-      `${this.serverURI}/controls/stop`
-    ).then(res => res.data)
+    return this._request('stop')
+      .then(res => res.data)
   }
 
   play (source) {
     return this._request(
-      `${this.serverURI}/controls/play`, { source }
+      'play', { source }
     ).then(res => res.data)
   }
 
   muteToggle () {
-    return this._request(
-      `${this.serverURI}/controls/unmutemute`
-    ).then(res => res.data)
+    return this._request('unmutemute')
+      .then(res => res.data)
   }
 
-  _request (url, params = {}) {
+  _request (endpoint, params = {}) {
     return this.$http({
       method: 'GET',
-      url,
+      url: `/api/controls/${endpoint}`,
       params
     }).then(res => res.data)
-      .catch(console.log)
+      .catch(res => res.status === 400
+        ? Promise.reject(res.data.errors[0])
+        : Promise.reject(`${res.statusText} on /api/controls/${endpoint}`)
+      ).catch(err => this.NotificationService.show(err))
   }
 }
