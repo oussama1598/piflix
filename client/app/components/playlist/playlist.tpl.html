@@ -1,0 +1,9 @@
+<md-sidenav flex layout="column" class="md-sidenav-right md-whiteframe-4" md-component-id="right">
+  <md-content layout-padding>
+    <md-list ng-cloak>
+      <md-list-item ng-repeat="item in ctrl.menu" ui-sref-active="active">
+        <a ui-sref="{{item.state}}"> {{ item.title }} </a>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</md-sidenav>

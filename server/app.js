@@ -1,6 +1,6 @@
 import express from 'express'
 import http from 'http'
-import config from './config/environment'
+import config from './config/config'
 import expressConfig from './config/express'
 import Routes from './routes'
 import Dlna from './modules/Dlna'

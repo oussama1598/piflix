@@ -1,10 +1,10 @@
-<md-content flex layout="column">
+<md-content flex layout="column" scrolly="browse.onBottom" scope="browse">
   <md-list ng-cloak flex ng-hide="browse.loading">
     <md-list-item ng-repeat="file in browse.result.items" ng-click="$event.stopPropagation();browse.onBrowseTo(file)">
       <md-icon>
         <i class="material-icons">{{ file.isFile ? 'note': 'folder' }}</i>
       </md-icon>
-      <p> {{ file.title }} </p>
+      <p class="text-dots"> {{ file.title }} </p>
       <md-button class="md-icon-button" ng-click="browse.onStream(file)" ng-show="file.isFile">
         <md-icon md-menu-align-target>
           <i class="material-icons">cast</i>

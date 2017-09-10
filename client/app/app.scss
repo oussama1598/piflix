@@ -1,7 +1,7 @@
 $fa-font-path: '/assets/fonts/font-awesome/';
 @import '~font-awesome/scss/font-awesome';
-@import '~angular-material/angular-material';
-// @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
+@import '~angular-material/angular-material'; // @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
+
 .browserupgrade {
   margin: 0.2em 0;
   background: #ccc;
@@ -11,7 +11,8 @@ $fa-font-path: '/assets/fonts/font-awesome/';
 
 md-toolbar.md-table-toolbar form {
   margin-left: 16px;
-  &>input {
+
+  & > input {
     outline: none;
     width: 100%;
     margin: 0;
@@ -20,7 +21,7 @@ md-toolbar.md-table-toolbar form {
   }
 }
 
-md-input-container{
+md-input-container {
   margin: 0;
 }
 
@@ -30,25 +31,17 @@ md-input-container{
   right: 10px;
 }
 
-
+.text-dots {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 // Component styles are injected through gulp
-
 /* inject:scss */
-
-
 @import 'components/navbar/navbar';
-
-
 @import 'components/player/player';
-
-
+@import 'components/playlist/playlist';
 @import 'features/dashboard/browse/browse';
-
-
 @import 'features/dashboard/dashboard';
-
-
 @import 'features/dashboard/dlna/dlna';
-
-
 /* endinject */

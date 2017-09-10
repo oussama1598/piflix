@@ -9,11 +9,13 @@ export default class browseController {
     this.BrowseService = BrowseService
     this.$stateParams = $stateParams
 
+    this.limit = 20
     this.history = []
     this.result = {
       items: []
     }
     this.loading = true
+    this.scrollAllowed = true
   }
 
   $onInit () {
@@ -22,7 +24,7 @@ export default class browseController {
       state: 'dashboard.dlna'
     })
 
-    this.getStructure(0, 20, 1)
+    this.getStructure(0)
   }
 
   onBrowseTo (file) {
@@ -34,7 +36,7 @@ export default class browseController {
       return this.history.pop()
     }
 
-    this.getStructure(file.path)
+    this.getStructure(file.path, 1)
   }
 
   onStream (file) {
@@ -43,8 +45,10 @@ export default class browseController {
     this.$rootScope.$broadcast('play', file.streamUrl)
   }
 
-  getStructure (path, limit, page) {
-    this.loading = true
+  getStructure (path, page = 1) {
+    const limit = this.limit
+
+    this.scrollAllowed = false
     this.BrowseService.getDirStructure(
       this.$stateParams.uuid,
       path,
@@ -52,15 +56,37 @@ export default class browseController {
       page
     )
       .then(data => {
-        if (parseInt(data.path) !== 0) {
+        if (
+          parseInt(data.path) !== 0 &&
+          page === 1
+        ) {
           data.items.unshift({
             title: '..',
             isFile: false
           })
         }
 
-        this.result = data
+        if (page === 1) { this.result = data } else {
+          this.result.page = data.page
+          this.result.items = this.result.items.concat(data.items)
+        }
+
         this.loading = false
+        this.scrollAllowed = true
       })
+  }
+
+  onThumbError (file) {
+    file.thumb = null
+  }
+
+  onBottom () {
+    if (!this.result.page || !this.scrollAllowed) return
+
+    const nextPage = parseInt(this.result.page) + 1
+
+    if (nextPage <= parseInt(this.result.total_pages)) {
+      this.getStructure(this.result.path, nextPage)
+    }
   }
 }

@@ -222,7 +222,7 @@ gulp.task('webpack:dist', function () {
   const webpackDistConfig = makeWebpackConfig({ BUILD: true })
   return gulp.src(webpackDistConfig.entry.app)
     .pipe(webpack(webpackDistConfig))
-    .on('error', (err) => {
+    .on('error', () => {
       this.emit('end') // Recover from errors
     })
     .pipe(gulp.dest(`${paths.dist}/client`))
@@ -296,21 +296,21 @@ gulp.task('start:client', cb => {
 
 gulp.task('start:server', () => {
   process.env.NODE_ENV = process.env.NODE_ENV || 'development'
-  config = require(`./${serverPath}/config/environment`)
+  config = require(`./${serverPath}/config/config`)
   nodemon(`-w ${serverPath} ${serverPath}`)
     .on('log', onServerLog)
 })
 
 gulp.task('start:server:prod', () => {
   process.env.NODE_ENV = process.env.NODE_ENV || 'production'
-  config = require(`./${paths.dist}/${serverPath}/config/environment`)
+  config = require(`./${paths.dist}/${serverPath}/config/config`)
   nodemon(`-w ${paths.dist}/${serverPath} ${paths.dist}/${serverPath}`)
     .on('log', onServerLog)
 })
 
 gulp.task('start:server:debug', () => {
   process.env.NODE_ENV = process.env.NODE_ENV || 'development'
-  config = require(`./${serverPath}/config/environment`)
+  config = require(`./${serverPath}/config/config`)
   // nodemon(`-w ${serverPath} --debug=5858 --debug-brk ${serverPath}`)
   nodemon(`-w ${serverPath} --inspect --debug-brk ${serverPath}`)
     .on('log', onServerLog)

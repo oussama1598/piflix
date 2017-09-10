@@ -10,7 +10,7 @@ import path from 'path'
 // middlewares
 import expressValidator from '../middlewares/expressValidator'
 
-import config from './environment'
+import config from './config'
 
 export default function (app) {
   var env = app.get('env')
